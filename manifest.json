@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "description": "Yarr Harr Fiddle Dee Dee",
   "permissions": [
-    "contextMenus"
+    "contextMenus", "downloads"
    ],
   "background": { 
     "scripts": ["background.js"]
