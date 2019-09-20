@@ -1,0 +1,12 @@
+{
+  "name": "Loot Font",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Yarr Harr Fiddle Dee Dee",
+  "permissions": [
+    "contextMenus"
+   ],
+  "background": { 
+    "scripts": ["background.js"]
+  }
+}
