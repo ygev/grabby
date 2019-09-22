@@ -14,7 +14,7 @@ document.addEventListener("mousedown", function(event){
         if (computedStyle.indexOf(",") != -1) {
             computedStyle = computedStyle.substring(0, computedStyle.indexOf(","));
         }
-        console.log(computedStyle);
+        // console.log(computedStyle);
     }
 }, true);
 
@@ -61,7 +61,7 @@ for (i in fontCssRules) {
     typeface2URL[fontFamily] = prettyURL;    
 }
 
-console.log(typeface2URL);
+// console.log(typeface2URL);
 
 function findUrl(urlInput) {
     var urlOutput = [];
