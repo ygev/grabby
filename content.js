@@ -1,10 +1,18 @@
-var clickedEl = null;
-// console.log("Hej!");
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    console.log("Sending response to background.js: ");
+    sendResponse({url: typeface2URL[computedStyle]}); 
+});
+
+var typeface2URL = {};
+
+var computedStyle = null;
 document.addEventListener("mousedown", function(event){
     // right click
     if (event.button == 2) { 
-        clickedEl = event.target;
-        // console.log(getComputedStyle(clickedEl).getPropertyValue("font-family"));
+        var clickedEl = event.target;
+        computedStyle = getComputedStyle(clickedEl).getPropertyValue("font-family");
+        computedStyle = computedStyle.substring(0, computedStyle.indexOf(","));
+        console.log(computedStyle);
     }
 }, true);
 
@@ -22,29 +30,36 @@ for (i in document.styleSheets) {
         }
     } catch(e) {
       if (e instanceof DOMException){
-        //   console.log("caught DOM Exception")
       } else {
           throw e;
       }
     }
 }
 
-// prints out all the 'url' values in fontCssRules
+// create a mapping between all the font faces and their download URLs
 for (i in fontCssRules) {
-    //var str = fontCssRules[i].cssText.substring(fontCssRules[i].cssText.lastIndexOf("url") + 5, fontCssRules[i].cssText.lastIndexOf(".woff")+ 5 )
-    var str = fontCssRules[i].cssText;
-    var strArr = str.split(';');
-    strArr = strArr.map(s => s.trim());
-    var urlStr = strArr.find(function(element) {
+    var cssFont = fontCssRules[i].cssText;
+    var cssFontSplit = cssFont.split(';');
+
+    var rawFontFamily = cssFontSplit.find(function(element){
+        return element.includes('font-family')
+    });
+    var fontFamily = findFontName(rawFontFamily);
+    
+    cssFontSplit = cssFontSplit.map(s => s.trim());
+    var rawURL = cssFontSplit.find(function(element) {
         return element.startsWith('src: url(')
     });
-    var urlArr = findUrl(urlStr);
+    var urlArr = findUrl(rawURL);
     var bestType = findBestType(urlArr);
-    // console.log(fontCssRules[i].href)
-    // console.log(bestType);
     var prettyURL = urlSurgery(fontCssRules[i].href, bestType)
-    console.log(prettyURL);
+
+    // connection.postMessage(prettyURL);
+
+    typeface2URL[fontFamily] = prettyURL;    
 }
+
+console.log(typeface2URL);
 
 function findUrl(urlInput) {
     var urlOutput = [];
@@ -57,6 +72,14 @@ function findUrl(urlInput) {
         end = urlInput.indexOf(")", start);
         urlOutput.push(urlInput.substring(start + 5, end - 1));
     }
+}
+
+function findFontName(fontInput){
+    var fontOutput;
+    var start = fontInput.indexOf("font-family:");
+    var end = fontInput.length;
+    fontOutput = fontInput.substring(start + 13, end);
+    return fontOutput;
 }
 
 // Find Best File Format for Downloaded Font (TTF/OTF if exists > Webfont)
