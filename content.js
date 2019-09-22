@@ -1,5 +1,5 @@
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    console.log("Sending response to background.js: ");
+    console.log("Sending response to background.js:" + typeface2URL[computedStyle]);
     sendResponse({url: typeface2URL[computedStyle]}); 
 });
 
@@ -11,7 +11,9 @@ document.addEventListener("mousedown", function(event){
     if (event.button == 2) { 
         var clickedEl = event.target;
         computedStyle = getComputedStyle(clickedEl).getPropertyValue("font-family");
-        computedStyle = computedStyle.substring(0, computedStyle.indexOf(","));
+        if (computedStyle.indexOf(",") != -1) {
+            computedStyle = computedStyle.substring(0, computedStyle.indexOf(","));
+        }
         console.log(computedStyle);
     }
 }, true);
