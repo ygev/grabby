@@ -4,11 +4,18 @@
   "manifest_version": 2,
   "description": "Yarr Harr Fiddle Dee Dee",
   "permissions": [
-    "contextMenus", "downloads"
+    "contextMenus", 		
+    "tabs",
+		"http://*/",
+    "https://*/",
+		"*://*/*",
+		"downloads",
+		"downloads.shelf"
    ],
   "background": { 
     "scripts": ["background.js"]
   },
+  "devtools_page": "devtools.html",
   "content_scripts": [
     {
       "matches": [

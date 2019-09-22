@@ -1,4 +1,4 @@
 chrome.contextMenus.create({
-  title: "Download %s", 
+  title: "Download Webfont", 
   contexts:["selection"]
 });
