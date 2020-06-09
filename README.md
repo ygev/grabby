@@ -6,6 +6,7 @@ A Chrome extension that converts and saves webfonts to desktop.
 ## To-Do
 - Levenshtein sequence for font-family detection
 - Conversion to TTF upon download.
+- Some sites encode their fonts in base64, so a built-in decoder for that case.
 
 ## Known Bugs
 - While loop doesn't break and destroys entire websites.
