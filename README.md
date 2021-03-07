@@ -1,7 +1,7 @@
 # Banditto
 A Chrome extension that converts and saves webfonts to desktop.
 
-<img align="center" src="https://i.imgur.com/VTm9bcf.png"/>
+<img align="center" src="banditto.png"/>
 
 ## To-Do
 - Levenshtein sequence for font-family detection
