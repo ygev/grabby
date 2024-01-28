@@ -1,7 +1,13 @@
 chrome.contextMenus.create({
     title: "Download Webfont", 
     contexts: ["selection"],
-    onclick: performDownload
+    id: 'download-webfont',
+});
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+    if (info.menuItemId == 'download-webfont') {
+        performDownload();
+    }
 });
 
 function performDownload(){
